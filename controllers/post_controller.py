@@ -21,6 +21,7 @@ post = Blueprint('post', __name__)
 @post.route("/", methods=["POST"])
 def create_post():
     req = json.loads(request.data)
+    print(req) 
     
     content = req.get('content')
     media_content = req.get('media_content')
