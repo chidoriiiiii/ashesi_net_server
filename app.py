@@ -35,4 +35,4 @@ app.register_blueprint(_user, url_prefix="/users")
 app.register_blueprint(post, url_prefix="/posts")
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=True, host='0.0.0.0')
