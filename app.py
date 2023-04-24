@@ -9,6 +9,7 @@ from auth.manager import login_manager, current_user
 from utils.utils import to_json
 from ws import socketio
 from flask_cors import CORS
+import os
 # from models.user.user_model import User
 # from models.post.post_model import Post
 
@@ -35,4 +36,5 @@ app.register_blueprint(_user, url_prefix="/users")
 app.register_blueprint(post, url_prefix="/posts")
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True, host='0.0.0.0')
+    port = int(os.environ.get('PORT', 5000))
+    socketio.run(app, debug=True, host='0.0.0.0', port=port)
