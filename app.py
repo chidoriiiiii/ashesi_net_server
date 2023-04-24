@@ -18,11 +18,11 @@ app.config["SQLALCHEMY_DATABASE_URI"] = config.DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'super secret key'
 CORS(app, supports_credentials=True, resources={
-     r"/*": {"origins": "http://localhost:3000"}})
+     r"/*": {"origins": "https://ashesi-network.netlify.app/#/"}})
 
 db.init_app(app)
 login_manager.init_app(app)
-socketio.init_app(app, cors_allowed_origins =["http://localhost:3000"])
+socketio.init_app(app, cors_allowed_origins =["https://ashesi-network.netlify.app/#/"])
 Migrate(app, db)
 
 
