@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "jonathan-cloud-func",
+  "private_key_id": "d8061dde35444056024ac766113ce9244220d230",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDExtHeM0jjiU1E\nZBEQrQekZRtssTyaWqYj7l5ccs9JdYuqTYJbS/qkfsQCWfP3oHLDSQn151dzMA3c\nZq/U4LyKm/PFajR3GCmQTEq5TCbqzzP4SQCH5+5ZAanUHiIQ6nzA8XGzJtg2ExZP\nVw9dqaaFWkapR3BEOTCuovTrspyj79DipfINwrO6vvR48Z84E/rhy56Ppxtwv4nZ\nezCip8DycM6IN/GrGx72lrdu7c2olVF3PZvC9JJjiOC7RxyvS9G9aweq5rDFLgAL\nXJ8zbfg9VVDxdpXxHBlQEM4DJwjr9C94ukUqHPSD5NW/Fn4FrcC8DAjjN4+mExEF\nMSsQa0jrAgMBAAECggEACBY4/xi8dh1pFNZynRd/U5I+054KZOLfe7qKxjcxraMs\nX44FPXCclwYJUs9qPKhWDxCBXZ8USPeV75OIxlw2DhGQAxz06wVjL+WdbIq5+WG/\n5lmZsVF8H3b3XnBJQMi3jSEJuy3C1PYT2fmJ+B9wvdTn8oJXwCCu5NPC8ld0zd01\naWNyL6dP+KEdBLhcROn94pzDRpjPzhYcLQD662TVXCOuQ9IBYkvv19AxRhq1zWLQ\nUNQ0TsGnkQHyHurb5/zxtn6L9iKLEk3VonGaiDswOsyRdQx6WEcyQGfqden5F4/R\n862ssVINukLLlaQlG1KzyBZH6q/k9jek7g8hEH9lgQKBgQDmliTKpxKjsu2X7qia\nWz01e4R+rU04M7ZwhjCNnbpMahb/qNUbeX7bmWlDHrm+dIVR6ZDDaHeM9UdjNcpK\nOZcrfRwyCROffENCeUjnuv64mzO4/82Xhn4TLqyj6cY9mm4sMdcNcr/COf8HaBNe\nlzUR6WTvH5wdrGL4iJoCPKqS9wKBgQDadsBvFzXtkJYFTPE51651Hs1okBfilS+q\nAvW7slJDRJOfhaI3HZZ7yKS7su38LzAnQTS4pHDCxQz6prmjjTJ1xBXTKM9ngl4S\ntWGQhA6ibDGqCjBm5ilxYlNqr4Pd7dMtBQWnVicLmvT3GzhXwFvfef9OZJNeIY0S\nXku1yhPIrQKBgQC7HALm3wPlCgB6VRNDjd3xVDWDhaUvgeb9ECa+A8t0znGzK5Ei\nJkimcapU6M3YmjzE5z6tEkxQeYhgHPn1mR3uECuc/niJ5g++FSTvxXGE44vpBsoR\ntvT/I9S7fat7uaDFA/x50S+BsAYeQHnXO+O4kSdyUrgf7A6zlkVCo2/WqQKBgDvs\nBqxx+WDIH94kVKZA+qE1abIck/CaaxB+71gkeVvqG3PN+8iSXQxm5Ih3c7+QUezy\nfbuHn0ZNNloqERFDUWvr9PCOaRVDNPp8td4l2r3CX3z8fno693MaPTcuHUVqTloy\n3nIft2X/guGknbe0E38gv16JR8KyATfglXOvke2hAoGBAORfDAdMjGvmj/xDBaiz\nukCUMV9eqvUXBjAjiKP1S/OQoH4C5Xj3c4fIlHnaxYp3pUSqmpJsvsPe7qkSjwFa\nBL1IBtttqPm+igd4nNRe6J0J7uLSHJvxruBoPMY7TYd3gQ4SIRFJMt7RmK1wWodl\nsrKcsvQCHOMK/QnAUfGfHcPz\n-----END PRIVATE KEY-----\n",
+  "client_email": "firestore-ashesi-net@jonathan-cloud-func.iam.gserviceaccount.com",
+  "client_id": "107695273529432879075",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firestore-ashesi-net%40jonathan-cloud-func.iam.gserviceaccount.com"
+}
