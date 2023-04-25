@@ -8,7 +8,7 @@ class Config(object):
     MICROSOFT_CLIENT_SECRET = os.environ.get("MICROSOFT_CLIENT_SECRET")
     MICROSOFT_CLIENT_ID = os.environ.get("MICROSOFT_CLIENT_ID")
     MICROSOFT_REMOTE_APP = os.environ.get("MICROSOFT_REMOTE_APP")
-    MICROSOFT_CALLBACK = "http://localhost:5000/auth/microsoft/callback"
+    MICROSOFT_CALLBACK = "https://flask-production-b88c.up.railway.app/auth/microsoft/callback"
     API_BASE_URI = "https://graph.microsoft.com/",
     AUTHORIZE_URI = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize'
     ACCESS_TOKEN_URI = 'https://login.microsoftonline.com/common/oauth2/v2.0/token'
