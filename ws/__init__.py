@@ -2,6 +2,7 @@ from flask import request
 from flask_socketio import SocketIO, emit
 from firebase_admin import credentials, firestore, initialize_app
 import json
+import datetime
 
 cred = credentials.Certificate('config/key.json')
 initialize_app(cred)
@@ -27,5 +28,6 @@ def handle_new_post(data):
     print(data)
     # data['media_content'] = b''.join([bytes([x]) for x in data['media_content']]).decode('utf-16', errors='replace')
     # notification = json.loads(data)
+    data['timestamp'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     notification_ref.document().set(data)
     emit('new_post', json.dumps(data), broadcast=True, include_self=True)
