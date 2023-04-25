@@ -19,6 +19,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 app.config['SESSION_COOKIE_SECURE'] = True
 app.secret_key = 'super secret key'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'key.json'
 
 CORS(app, supports_credentials=True, resources={
      r"/*": {"origins": "https://ashesi-network.netlify.app"}})
