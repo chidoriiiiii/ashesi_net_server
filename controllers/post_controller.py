@@ -18,7 +18,7 @@ post = Blueprint('post', __name__)
 
 
 
-@post.route("/new", methods=["POST"])
+@post.route("/", methods=["POST"])
 def create_post():
     req = json.loads(request.data)
     
