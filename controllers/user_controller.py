@@ -143,6 +143,59 @@ def retreive_bookmarks():
             'next_cursor': next_cursor}
 
    
+@_user.route("/bookmarks/<user_id>", methods=["GET"])
+def retreive_bookmarks_by_id(user_id):
+    cur = conn.cursor()
+
+    limit = 10
+    cursor = int(request.args.get('cursor'))
+    offset = cursor * limit
+    next_cursor = cursor + 1
+
+    query = f'''
+        SELECT post.post_id, post.media_url, post.title, post.content, post.created_at, "user".avatar_url, "user".username, "user".user_id, 
+                             (select count(*) from likes where post_id = post.post_id) as like_count,
+                            (SELECT COUNT(*) FROM comment WHERE post_id = post.post_id) AS comment_count,
+                            CASE WHEN l.creator_id IS NOT NULL THEN true ELSE false END AS liked, 
+                            CASE WHEN s.saver_id IS NOT NULL THEN true ELSE false END AS saved
+        FROM post
+        JOIN saves ON saves.post_id = post.post_id
+        JOIN "user" ON saves.saver_id= "user".user_id
+        LEFT JOIN likes l ON post.post_id = l.post_id AND l.creator_id = '{user_id}'
+        LEFT JOIN saves s ON post.post_id = s.post_id AND s.saver_id = '{user_id}'
+        WHERE "user".user_id = '{user_id}'
+        ORDER BY post.created_at DESC
+        OFFSET {offset} Limit {limit};
+    '''
+   
+    cur.execute(query)
+
+    posts = []
+    for row in cur.fetchall():
+        post_dict = {
+            'post_id': row[0],
+            'media_url': row[1],
+            'title': row[2],
+            'content': row[3],
+            'created_at': row[4],
+            'author': {
+                'avatar_url': row[5],
+                'username': row[6],
+                'user_id': row[7]
+            },
+            'likes_count': row[8],
+            'comments_count': row[9], 
+            'has_liked': row[10],
+            'has_saved': row[11]
+        }
+
+        posts.append(post_dict)
+
+    has_next = False if len(posts) < limit else True
+    
+    return {'data': posts , 'has_next': has_next,
+            'next_cursor': next_cursor}
+
 @_user.route("/created", methods=["GET"])
 def retrieve_created():
     user_id = session.get('_user_id')
@@ -196,6 +249,58 @@ def retrieve_created():
     return {'data': posts , 'has_next': has_next,
             'next_cursor': next_cursor}
     
+
+@_user.route("/created/<user_id>", methods=["GET"])
+def retrieve_created_by_id(user_id):
+    cur = conn.cursor()
+
+    limit = 10
+    cursor = int(request.args.get('cursor'))
+    offset = cursor * limit
+    next_cursor = cursor + 1
+
+    query = f'''
+        SELECT post.post_id, post.media_url, post.title, post.content, post.created_at, "user".avatar_url, "user".username, "user".user_id, 
+                            (select count(*) from likes where post_id = post.post_id) as like_count,
+                            (SELECT COUNT(*) FROM comment WHERE post_id = post.post_id) AS comment_count,
+                            CASE WHEN l.creator_id IS NOT NULL THEN true ELSE false END AS liked, 
+                            CASE WHEN s.saver_id IS NOT NULL THEN true ELSE false END AS saved
+        FROM post
+        JOIN "user" ON post.author_id = "user".user_id 
+        LEFT JOIN likes l ON post.post_id = l.post_id AND l.creator_id = '{user_id}'
+        LEFT JOIN saves s ON post.post_id = s.post_id AND s.saver_id = '{user_id}'
+        WHERE post.author_id = '{user_id}'
+        ORDER BY post.created_at DESC
+        OFFSET {offset} Limit {limit};
+    '''
+   
+    cur.execute(query)
+
+    posts = []
+    for row in cur.fetchall():
+        post_dict = {
+            'post_id': row[0],
+            'media_url': row[1],
+            'title': row[2],
+            'content': row[3],
+            'created_at': row[4],
+            'author': {
+                'avatar_url': row[5],
+                'username': row[6],
+                'user_id': row[7]
+            },
+            'likes_count': row[8],
+            'comments_count': row[9], 
+            'has_liked': row[10],
+            'has_saved': row[11]
+        }
+
+        posts.append(post_dict)
+
+    has_next = False if len(posts) < limit else True
+    
+    return {'data': posts , 'has_next': has_next,
+            'next_cursor': next_cursor}
 
 @_user.route('/suggestions', methods=["GET"])
 def retrieve_suggestions():
