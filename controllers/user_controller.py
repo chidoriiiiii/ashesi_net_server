@@ -43,6 +43,26 @@ def update_user(user_id):
     db.session.commit()
     return {'msg': 'User profile successfully updated'}
 
+@_user.route("/<user_id>/setup", methods=["PATCH"])
+def update_user(user_id):
+    user = json.loads(request.data)
+    user_exists = User.query.get(user_id)
+    if not user_exists:
+        return {'msg': 'couldn"t update because user not found'}, 404
+
+    user_exists.student_id = user.get('student_id') if user.get('student_id') else user_exists.student_id
+    user_exists.date_of_birth = user.get('date_of_birth') if user.get('date_of_birth') else user_exists.date_of_birth
+    user_exists.bio = user.get('bio') if user.get('bio') else user_exists.bio
+    user_exists.major = user.get('major') if user.get('major') else user_exists.major
+    user_exists.year_group = user.get('year_group') if user.get('year_group') else user_exists.year_group
+    user_exists.favorite_food = user.get('favorite_food') if user.get('favorite_food') else user_exists.favorite_food
+    user_exists.favorite_movie = user.get('favorite_movie') if user.get('favorite_movie') else user_exists.favorite_movie
+    user_exists.residency = user.get('residency') if user.get('residency') else user_exists.residency
+
+
+    db.session.add(user_exists)
+    db.session.commit()
+    return {'msg': 'User profile successfully updated'}
 
 @_user.route("/<user_id>/follow", methods=["POST"])
 def create_follow(user_id):
