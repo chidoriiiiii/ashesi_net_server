@@ -44,7 +44,7 @@ def update_user(user_id):
     return {'msg': 'User profile successfully updated'}
 
 @_user.route("/<user_id>/setup", methods=["PATCH"])
-def update_user(user_id):
+def setup_profile(user_id):
     user = json.loads(request.data)
     user_exists = User.query.get(user_id)
     if not user_exists:
