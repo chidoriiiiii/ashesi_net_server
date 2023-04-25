@@ -4,7 +4,6 @@ from uuid import UUID
 from flask_sqlalchemy import Model
 from io import BytesIO
 from google.cloud import storage
-from google.auth.credentials import Credentials
 
 class CustomJSONEncoder(json.JSONEncoder):
     """
@@ -39,7 +38,6 @@ def to_json(obj):
         #     type(obj).__name__)
 
 def upload_image(image_bytes):
-    creds = Credentials.from_service_account_file('key.json')
     image_bytes = b''.join([bytes([x]) for x in image_bytes])
     client = storage.Client()
     bucket = client.bucket("jonathan_bucket_1234")
