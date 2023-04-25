@@ -62,7 +62,7 @@ def setup_profile(user_id):
 
     db.session.add(user_exists)
     db.session.commit()
-    return {'msg': 'User profile successfully updated'}
+    return to_json(user_exists); 
 
 @_user.route("/<user_id>/follow", methods=["POST"])
 def create_follow(user_id):
