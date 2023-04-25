@@ -160,9 +160,10 @@ def retreive_bookmarks_by_id(user_id):
                             CASE WHEN s.saver_id IS NOT NULL THEN true ELSE false END AS saved
         FROM post
         JOIN saves ON saves.post_id = post.post_id
-        JOIN "user" ON saves.saver_id= "user".user_id
+        JOIN "user" ON post.author_id = "user".user_id
         LEFT JOIN likes l ON post.post_id = l.post_id AND l.creator_id = '{user_id}'
         LEFT JOIN saves s ON post.post_id = s.post_id AND s.saver_id = '{user_id}'
+        WHERE "user".user_id = '{user_id}'
         ORDER BY post.created_at DESC
         OFFSET {offset} Limit {limit};
     '''
