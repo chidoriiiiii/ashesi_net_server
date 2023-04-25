@@ -18,73 +18,69 @@ post = Blueprint('post', __name__)
 
 
 
-@post.route("/", methods=["POST"])
+@post.route("/new", methods=["POST"])
 def create_post():
     req = json.loads(request.data)
-    print(req) 
-    return {
-        'msg': "hello"
+    
+    content = req.get('content')
+    media_content = req.get('media_content')
+    author_id = session.get('_user_id') 
+
+    if(media_content):
+        blob = upload_image(media_content)
+        post = Post(
+            # title=title,
+            content=content,
+            author_id=author_id,
+            media_url=blob.media_link)
+    else:
+        post = Post(
+            # title=title,
+            content=content,
+            author_id=author_id,
+        )
+
+    db.session.add(post)
+    db.session.commit()
+    
+    
+    #Query Created Post 
+    
+    cur = conn.cursor()
+    query = f'''
+                SELECT post.post_id, post.media_url, post.title, post.content, post.created_at, "user".avatar_url, "user".username, "user".user_id, 
+                    (select count(*) from likes where post_id = post.post_id) as like_count,
+                    (SELECT COUNT(*) FROM comment WHERE post_id = post.post_id) AS comment_count,
+                    CASE WHEN l.creator_id IS NOT NULL THEN true ELSE false END AS liked, 
+                    CASE WHEN s.saver_id IS NOT NULL THEN true ELSE false END AS saved
+                FROM post 
+                JOIN "user" ON post.author_id = "user".user_id 
+                LEFT JOIN likes l ON post.post_id = l.post_id AND l.creator_id = '{author_id}'
+                LEFT JOIN saves s ON post.post_id = s.post_id AND s.saver_id = '{author_id}'
+                WHERE post.post_id = '{post.post_id}'
+                ORDER BY post.created_at DESC;
+    '''
+    cur.execute(query)
+    row = cur.fetchone()
+    print(row)
+    post = {
+        'post_id': row[0],
+        'media_url': row[1],
+        'title': row[2],
+        'content': row[3],
+        'created_at': row[4],
+        'author': {
+            'avatar_url': row[5],
+            'username': row[6],
+            'user_id': row[7]
+        },
+        'likes_count': row[8],
+        'comments_count': row[9],
+        'has_liked': row[10],
+        'has_saved': row[11]
     }
     
-    # content = req.get('content')
-    # media_content = req.get('media_content')
-    # author_id = session.get('_user_id') 
-
-    # if(media_content):
-    #     blob = upload_image(media_content)
-    #     post = Post(
-    #         # title=title,
-    #         content=content,
-    #         author_id=author_id,
-    #         media_url=blob.media_link)
-    # else:
-    #     post = Post(
-    #         # title=title,
-    #         content=content,
-    #         author_id=author_id,
-    #     )
-
-    # db.session.add(post)
-    # db.session.commit()
-    
-    
-    # #Query Created Post 
-    
-    # cur = conn.cursor()
-    # query = f'''
-    #             SELECT post.post_id, post.media_url, post.title, post.content, post.created_at, "user".avatar_url, "user".username, "user".user_id, 
-    #                 (select count(*) from likes where post_id = post.post_id) as like_count,
-    #                 (SELECT COUNT(*) FROM comment WHERE post_id = post.post_id) AS comment_count,
-    #                 CASE WHEN l.creator_id IS NOT NULL THEN true ELSE false END AS liked, 
-    #                 CASE WHEN s.saver_id IS NOT NULL THEN true ELSE false END AS saved
-    #             FROM post 
-    #             JOIN "user" ON post.author_id = "user".user_id 
-    #             LEFT JOIN likes l ON post.post_id = l.post_id AND l.creator_id = '{author_id}'
-    #             LEFT JOIN saves s ON post.post_id = s.post_id AND s.saver_id = '{author_id}'
-    #             WHERE post.post_id = '{post.post_id}'
-    #             ORDER BY post.created_at DESC;
-    # '''
-    # cur.execute(query)
-    # row = cur.fetchone()
-    # print(row)
-    # post = {
-    #     'post_id': row[0],
-    #     'media_url': row[1],
-    #     'title': row[2],
-    #     'content': row[3],
-    #     'created_at': row[4],
-    #     'author': {
-    #         'avatar_url': row[5],
-    #         'username': row[6],
-    #         'user_id': row[7]
-    #     },
-    #     'likes_count': row[8],
-    #     'comments_count': row[9],
-    #     'has_liked': row[10],
-    #     'has_saved': row[11]
-    # }
-    
-    # cur.close()
+    cur.close()
 
     return post
 
