@@ -26,6 +26,6 @@ def socket_disconnet(data):
 def handle_new_post(data):
     print(data)
     # data['media_content'] = b''.join([bytes([x]) for x in data['media_content']]).decode('utf-16', errors='replace')
-    notification = json.loads(data)
-    notification_ref.document().set(notification)
+    # notification = json.loads(data)
+    notification_ref.document().set(data)
     emit('new_post', json.dumps(data), braodcast=True, include_self=True)
