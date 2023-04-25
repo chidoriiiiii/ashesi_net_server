@@ -239,3 +239,41 @@ def retrieve_suggestions():
         conn.rollback()
     finally:
         cur.close()
+        
+
+@_user.route('/search', methods=["GET"])
+def search_users():
+    user_id = session.get('_user_id')
+    query = request.query_string.decode('utf-8')
+    query = query.split("=")[1]
+    print(query)
+
+    query = f'''
+        SELECT "user".user_id, username, avatar_url, email_address 
+        FROM "user"
+        WHERE "user".user_id != '{user_id}'
+        AND "user".email_address Like '{query}%'
+    '''
+    
+    cur = conn.cursor()
+
+    try:
+        cur.execute(query)  
+        suggestions = []
+        for row in cur.fetchall():
+            sugg_dict= {
+                'user_id': row[0],
+                'username': row[1],
+                'avatar_url': row[2],
+                'email_address': row[3],
+            }
+
+            suggestions.append(sugg_dict)
+
+        return suggestions; 
+
+    except psycopg2.Error as e:
+        print("Error: ", e)
+        conn.rollback()
+    finally:
+        cur.close()
