@@ -19,6 +19,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_COOKIE_SAMESITE'] = 'None'
 app.config['SESSION_COOKIE_SECURE'] = True
 app.secret_key = 'super secret key'
+
 CORS(app, supports_credentials=True, resources={
      r"/*": {"origins": "https://ashesi-network.netlify.app"}})
 
@@ -36,6 +37,7 @@ def index():
 app.register_blueprint(auth, url_prefix="/auth")
 app.register_blueprint(_user, url_prefix="/users")
 app.register_blueprint(post, url_prefix="/posts")
+
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
