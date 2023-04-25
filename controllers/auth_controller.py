@@ -34,6 +34,7 @@ def signup():
     req = json.loads(request.data)
 
     email_address = req.get('email_address')
+    student_id = req.get('student_id')
     username = req.get('username')
     password = req.get('password')
 
@@ -43,10 +44,11 @@ def signup():
 
     password_hash = generate_password_hash(password=password, method='sha256')
     me = User(
+        student_id = student_id,
         email_address=email_address,
         username=username,
         password_hash=password_hash,
-        avatar_url = 'https://i.pinimg.com/474x/f1/da/a7/f1daa70c9e3343cebd66ac2342d5be3f.jpg'
+        avatar_url = 'https://cdn.dribbble.com/users/6142/screenshots/5679189/media/1b96ad1f07feee81fa83c877a1e350ce.png?compress=1&resize=400x300&vertical=top'
         )
     db.session.add(me)
     db.session.commit()
